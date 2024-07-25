@@ -64,14 +64,6 @@ def extract_autocorrelation_features(data, lag=1):
 
 def extract_mean_crossing_rate(data):
     return np.mean(np.diff(data > np.mean(data)) != 0)
-
-def extract_frequency_domain_features(data, fs):
-    f, Pxx = welch(data, fs, nperseg=fs)
-    low_freq_power = np.sum(Pxx[f < 5])
-    mid_freq_power = np.sum(Pxx[(f >= 5) & (f < 10)])
-    high_freq_power = np.sum(Pxx[f >= 10])
-    return np.array([low_freq_power, mid_freq_power, high_freq_power])
-
 # Extract features
 print("Extracting features...")
 start_time = time.time()
@@ -85,8 +77,6 @@ kurtosisFeatures = extract_kurtosis_features(atx_filtered)
 
 autocorrelationFeatures = np.array([extract_autocorrelation_features(signal, lag=1) for signal in atx_filtered.T])
 meanCrossingRateFeatures = np.array([extract_mean_crossing_rate(signal) for signal in atx_filtered.T])
-frequencyDomainFeatures = np.array([extract_frequency_domain_features(signal, fs) for signal in atx_filtered.T])
-
 
 print("Creating feature table...")
 featureTable = pd.DataFrame({

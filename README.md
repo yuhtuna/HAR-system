@@ -1,3 +1,4 @@
+# Implementing HAR system using SVM model from MATLAB
 Accuracy: ~ 75%
 
 Model: SVM
